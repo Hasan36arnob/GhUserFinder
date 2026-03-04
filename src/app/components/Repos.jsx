@@ -1,7 +1,6 @@
 "use client";
-import { Badge, Button, Flex, Spinner, useToast } from "@chakra-ui/react";
-import React, { useEffect, useState } from "react";
-import { Text } from "@/app/chakra";
+import { Badge, Box, Button, Flex, Spinner, Text, useToast } from "@chakra-ui/react";
+import React, { useMemo, useEffect, useState } from "react";
 import { Link } from "@chakra-ui/next-js";
 
 const Repos = ({ reposUrl }) => {
@@ -34,84 +33,84 @@ const Repos = ({ reposUrl }) => {
 		fetchRepos();
 	}, [reposUrl, toast]);
 
+	const sortedRepos = useMemo(() => {
+		return [...repos].sort((a, b) => b.stargazers_count - a.stargazers_count);
+	}, [repos]);
+
+	const visibleRepos = showMore ? sortedRepos : sortedRepos.slice(0, 5);
+
 	return (
 		<>
 			<Text
 				textAlign={"center"}
-				letterSpacing={1.5}
-				fontSize={"3xl"}
-				fontWeight={"bold"}
-				color={"green.400"}
-				mt={4}
+				letterSpacing={1}
+				fontSize={{ base: "2xl", md: "3xl" }}
+				fontWeight={"800"}
+				color={"ink.900"}
+				mt={10}
 			>
-				REPOSITORIES
+				Top Repositories
 			</Text>
 			{loading && (
 				<Flex justifyContent={"center"}>
-					<Spinner size={"xl"} my={4} />
+					<Spinner size={"xl"} my={5} color='brand.600' thickness='4px' />
 				</Flex>
 			)}
 
-			{repos
-				.sort((a, b) => b.stargazers_count - a.stargazers_count)
-				.map((repo, idx) => {
-					if (idx > 4 && !showMore) return null;
-					return (
-						<Flex
-							key={repo.id}
-							padding={4}
-							bg={"whiteAlpha.200"}
-							_hover={{ bg: "whiteAlpha.400" }}
-							my={4}
-							px={10}
-							gap={4}
-							borderRadius={4}
-							transition={"all 0.3s ease"}
-							justifyContent={"space-between"}
-							alignItems={"center"}
-						>
-							<Flex flex={1} direction={"column"}>
-								<Link href={repo.html_url} fontSize={"md"} fontWeight={"bold"}>
-									{repo.name}
-								</Link>
-								<Badge
-									fontSize={"0.7em"}
-									colorScheme={"whatsapp"}
-									w={"min-content"}
-									textAlign={"center"}
-									px={1}
-									mt={1}
-								>
-									Language: {repo.language || "None"}
-								</Badge>
-							</Flex>
-
-							<Flex flex={1} gap={4} ml={6}>
-								<Badge fontSize={"0.9em"} colorScheme='orange' flex={1} textAlign={"center"}>
-									Stars: {repo.stargazers_count}
-								</Badge>
-								<Badge fontSize={"0.9em"} colorScheme='pink' flex={1} textAlign={"center"}>
-									Forks: {repo.forks_count}
-								</Badge>
-								<Badge fontSize={"0.9em"} colorScheme='cyan' flex={1} textAlign={"center"}>
-									Watchers: {repo.watchers_count}
-								</Badge>
-							</Flex>
+			{visibleRepos.map((repo, idx) => (
+				<Box
+					key={repo.id}
+					p={{ base: 4, md: 5 }}
+					bg={"whiteAlpha.700"}
+					my={4}
+					borderRadius='xl'
+					border='1px solid'
+					borderColor='blackAlpha.100'
+					boxShadow='0 12px 28px rgba(17, 24, 39, 0.07)'
+					animation='repo-rise 0.45s ease both'
+					style={{ animationDelay: `${idx * 90}ms` }}
+					_hover={{ transform: "translateY(-2px)", boxShadow: "0 18px 32px rgba(17, 24, 39, 0.1)" }}
+					transition='all 0.2s ease'
+				>
+					<Flex direction={{ base: "column", md: "row" }} justifyContent='space-between' gap={4} alignItems='start'>
+						<Flex flex={1} direction={"column"} gap={1}>
+							<Link href={repo.html_url} fontSize={{ base: "lg", md: "xl" }} fontWeight={"700"} color='ink.900'>
+								{repo.name}
+							</Link>
+							<Text color='blackAlpha.700' noOfLines={2} fontSize='sm'>
+								{repo.description || "No description provided for this repository."}
+							</Text>
+							<Badge fontSize={"0.75em"} colorScheme={"green"} w={"fit-content"} px={2} py={1} mt={1}>
+								Language: {repo.language || "None"}
+							</Badge>
 						</Flex>
-					);
-				})}
+
+						<Flex gap={3} w={{ base: "full", md: "auto" }} flexWrap='wrap'>
+							<Badge fontSize={"0.82em"} colorScheme='orange' textAlign={"center"} px={3} py={2}>
+								Stars: {repo.stargazers_count}
+							</Badge>
+							<Badge fontSize={"0.82em"} colorScheme='pink' textAlign={"center"} px={3} py={2}>
+								Forks: {repo.forks_count}
+							</Badge>
+							<Badge fontSize={"0.82em"} colorScheme='cyan' textAlign={"center"} px={3} py={2}>
+								Watchers: {repo.watchers_count}
+							</Badge>
+						</Flex>
+					</Flex>
+				</Box>
+			))}
 
 			{showMore && (
 				<Flex justifyContent={"center"} my={4}>
-					<Button size='md' colorScheme='whatsapp' onClick={() => setShowMore(false)}>
+					<Button size='md' bg='ink.800' color='white' _hover={{ bg: "ink.700" }} onClick={() => setShowMore(false)}>
 						Show Less
 					</Button>
 				</Flex>
 			)}
 
-			{!showMore && repos.length > 5 && (
+			{!showMore && sortedRepos.length > 5 && (
 				<Flex justifyContent={"center"} my={4}>
-					<Button size='md' colorScheme='whatsapp' onClick={() => setShowMore(true)}>
+					<Button size='md' bg='ink.800' color='white' _hover={{ bg: "ink.700" }} onClick={() => setShowMore(true)}>
 						Show More
 					</Button>
 				</Flex>

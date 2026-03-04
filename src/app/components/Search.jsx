@@ -1,5 +1,6 @@
 "use client";
-import { Button, Input, useToast } from "@/app/chakra";
+import { Button, Flex, Input, InputGroup, InputLeftElement, Text, useToast } from "@/app/chakra";
+import { SearchIcon } from "@chakra-ui/icons";
 import { useState } from "react";
 
 const Search = ({ setUserData, setLoading }) => {
@@ -58,16 +59,40 @@ const Search = ({ setUserData, setLoading }) => {
 
 	return (
 		<form onSubmit={handleSubmit}>
-			<Input
-				variant={"outline"}
-				placeholder={"Type a username (i.e. burakorkmez)"}
-				focusBorderColor='green.500'
-				value={query}
-				onChange={(e) => setQuery(e.target.value)}
-			/>
-			<Button size='md' type='submit' colorScheme='whatsapp' mt={4} disabled={!query} opacity={!query ? 0.5 : 1}>
-				Search
-			</Button>
+			<Flex direction={{ base: "column", md: "row" }} gap={3} align='stretch'>
+				<InputGroup size='lg'>
+					<InputLeftElement pointerEvents='none'>
+						<SearchIcon color='blackAlpha.500' />
+					</InputLeftElement>
+					<Input
+						variant='filled'
+						placeholder='Type a username (example: torvalds)'
+						focusBorderColor='brand.500'
+						bg='whiteAlpha.900'
+						_hover={{ bg: "white" }}
+						value={query}
+						onChange={(e) => setQuery(e.target.value)}
+						border='1px solid'
+						borderColor='blackAlpha.100'
+						rounded='full'
+					/>
+				</InputGroup>
+				<Button
+					size='lg'
+					type='submit'
+					bg='ink.800'
+					color='white'
+					_hover={{ bg: "ink.700", transform: "translateY(-1px)" }}
+					_active={{ bg: "ink.900" }}
+					disabled={!query}
+					px={8}
+				>
+					Search Profile
+				</Button>
+			</Flex>
+			<Text mt={3} color='blackAlpha.700' fontSize='sm'>
+				Press Enter or click Search Profile to load user details and repositories.
+			</Text>
 		</form>
 	);
 };

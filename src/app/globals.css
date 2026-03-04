@@ -5,23 +5,48 @@
 }
 
 body {
-	background-color: #000 !important;
-	color: #fff !important;
+	min-height: 100vh;
+	background: radial-gradient(circle at 12% 18%, #f2faee 0%, #ecf8f2 24%, transparent 50%),
+		radial-gradient(circle at 82% 12%, #fff4df 0%, #fff7eb 22%, transparent 45%),
+		linear-gradient(145deg, #f9f8f2 0%, #f2f6ed 48%, #f5f3ea 100%);
+	color: #1f2937;
+	font-family: var(--font-manrope), sans-serif;
 }
 
-/* dark mode thin scroll bar */
+a {
+	color: inherit;
+}
+
+::selection {
+	background: #2ca57f;
+	color: #ffffff;
+}
+
 ::-webkit-scrollbar {
-	width: 10px;
+	width: 11px;
 }
 
 ::-webkit-scrollbar-track {
-	background: #000;
+	background: #e2e8f0;
+	border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb {
-	background: #888;
+	background: #96a8bf;
+	border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background: #555;
+	background: #6c819e;
+}
+
+@keyframes repo-rise {
+	from {
+		opacity: 0;
+		transform: translateY(8px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
 }
