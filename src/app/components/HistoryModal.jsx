@@ -22,13 +22,26 @@ const HistoryModal = ({ isOpen, onClose }) => {
 	const [searchHistory, setSearchHistory] = useState([]);
 	const toast = useToast();
 
+	const getStoredUsers = () => {
+		try {
+			const parsed = JSON.parse(localStorage.getItem("github-users"));
+			return Array.isArray(parsed) ? parsed : [];
+		} catch {
+			return [];
+		}
+	};
+
 	useEffect(() => {
-		const users = JSON.parse(localStorage.getItem("github-users")) || [];
-		setSearchHistory(users);
+		try {
+			const parsed = JSON.parse(localStorage.getItem("github-users"));
+			setSearchHistory(Array.isArray(parsed) ? parsed : []);
+		} catch {
+			setSearchHistory([]);
+		}
 	}, []);
 
 	const handleDeleteUser = (userId) => {
-		const users = JSON.parse(localStorage.getItem("github-users")) || [];
+		const users = getStoredUsers();
 		const userToDelete = users.find((user) => user.id === userId);
 		if (userToDelete) users.splice(users.indexOf(userToDelete), 1);
 
@@ -46,15 +59,15 @@ const HistoryModal = ({ isOpen, onClose }) => {
 	return (
 		<Modal isOpen={isOpen} onClose={onClose} isCentered size='xl'>
 			<ModalOverlay bg='blackAlpha.500' backdropFilter='blur(4px)' />
-			<ModalContent bg={"white"} borderRadius='2xl' border='1px solid' borderColor='blackAlpha.100'>
-				<ModalHeader fontFamily='heading' fontWeight='800'>
+			<ModalContent bg={"surface.900"} borderRadius='2xl' border='1px solid' borderColor='whiteAlpha.300'>
+				<ModalHeader fontFamily='heading' fontWeight='800' color='accent.200'>
 					Recent Searches
 				</ModalHeader>
 				<ModalBody>
-					<Text color='blackAlpha.700'>Users you searched for:</Text>
+					<Text color='whiteAlpha.800'>Users you searched for:</Text>
 					<VStack gap={3} maxHeight={360} overflowY={"auto"} my={4} pr={1}>
 						{searchHistory.length === 0 && (
-							<Text color={"blackAlpha.500"} fontSize={"sm"} fontWeight={"bold"}>
+							<Text color={"whiteAlpha.600"} fontSize={"sm"} fontWeight={"bold"}>
 								No users searched yet.
 							</Text>
 						)}
@@ -63,21 +76,21 @@ const HistoryModal = ({ isOpen, onClose }) => {
 							<Flex
 								key={user.id}
 								alignItems={"center"}
-								bg={"blackAlpha.50"}
+								bg={"whiteAlpha.100"}
 								w={"full"}
-								_hover={{ bg: "blackAlpha.100" }}
+								_hover={{ bg: "whiteAlpha.200" }}
 								borderRadius='xl'
 								p={3}
 								cursor={"pointer"}
 								justifyContent={"space-between"}
 								border='1px solid'
-								borderColor='blackAlpha.100'
+								borderColor='whiteAlpha.300'
 							>
 								<Flex gap={2} alignItems={"center"}>
 									<Avatar display={"block"} size={"lg"} name={user.name} src={user.avatar_url} />
 									<Box>
 										<Text fontWeight={"700"}>{user.name || "User"}</Text>
-										<Text fontSize={"sm"} color={"blackAlpha.600"}>
+										<Text fontSize={"sm"} color={"whiteAlpha.700"}>
 											{user.id}
 										</Text>
 									</Box>
@@ -88,23 +101,31 @@ const HistoryModal = ({ isOpen, onClose }) => {
 										href={user.url}
 										isExternal
 										size={"sm"}
-										color='white'
-										bg='brand.500'
+										color='surface.900'
+										bg='accent.500'
 										px={3}
 										py={1}
 										borderRadius='full'
-										_hover={{ textDecoration: "none", bg: "brand.600" }}
+										_hover={{ textDecoration: "none", bg: "accent.400" }}
 									>
 										Visit
 									</Link>
-									<DeleteIcon color='red.500' onClick={() => handleDeleteUser(user.id)} />
+									<Button
+										size='sm'
+										variant='ghost'
+										colorScheme='red'
+										onClick={() => handleDeleteUser(user.id)}
+										aria-label={`Delete ${user.id} from history`}
+									>
+										<DeleteIcon />
+									</Button>
 								</Flex>
 							</Flex>
 						))}
 					</VStack>
 				</ModalBody>
 				<ModalFooter>
-					<Button onClick={onClose} bg='ink.800' color='white' _hover={{ bg: "ink.700" }}>
+					<Button onClick={onClose} bg='accent.500' color='surface.900' _hover={{ bg: "accent.400" }}>
 						Close
 					</Button>
 				</ModalFooter>

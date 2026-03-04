@@ -12,9 +12,32 @@ const spaceGrotesk = Space_Grotesk({
 	variable: "--font-space-grotesk",
 });
 
+const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
+
 export const metadata = {
-	title: "Github User Finder",
-	description: "Search and explore GitHub users with style.",
+	metadataBase: new URL(siteUrl),
+	title: {
+		default: "GitHub Lens",
+		template: "%s | GitHub Lens",
+	},
+	description: "Production-grade GitHub profile explorer with repository insights and history.",
+	applicationName: "GitHub Lens",
+	keywords: ["GitHub", "profile finder", "repositories", "developer portfolio"],
+	openGraph: {
+		title: "GitHub Lens",
+		description: "Explore GitHub users, profiles, and top repositories in a premium interface.",
+		type: "website",
+		siteName: "GitHub Lens",
+	},
+	twitter: {
+		card: "summary_large_image",
+		title: "GitHub Lens",
+		description: "Find GitHub developers and analyze their repositories quickly.",
+	},
+	robots: {
+		index: true,
+		follow: true,
+	},
 };
 
 export default function RootLayout({ children }) {

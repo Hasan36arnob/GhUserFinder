@@ -5,18 +5,43 @@ import { useState } from "react";
 
 const Search = ({ setUserData, setLoading }) => {
 	const [query, setQuery] = useState("");
+	const [isSubmitting, setIsSubmitting] = useState(false);
 	const toast = useToast();
+
+	const getStoredUsers = () => {
+		try {
+			const parsed = JSON.parse(localStorage.getItem("github-users"));
+			return Array.isArray(parsed) ? parsed : [];
+		} catch {
+			return [];
+		}
+	};
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
-		if (!query) return;
+		const normalizedQuery = query.trim();
+		if (!normalizedQuery) return;
+
+		if (!/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i.test(normalizedQuery)) {
+			toast({
+				title: "Invalid username",
+				description: "Use a valid GitHub username format.",
+				status: "warning",
+				duration: 3000,
+				isClosable: true,
+			});
+			return;
+		}
+
+		setIsSubmitting(true);
 		setLoading(true);
 		setUserData(null);
+
 		try {
-			const res = await fetch(`https://api.github.com/users/${query}`);
+			const res = await fetch(`/api/github/users/${encodeURIComponent(normalizedQuery)}`);
 			const data = await res.json();
 
-			if (data.message) {
+			if (!res.ok || data.message) {
 				return toast({
 					title: "Error",
 					description: data.message === "Not Found" ? "User not found" : data.message,
@@ -26,7 +51,8 @@ const Search = ({ setUserData, setLoading }) => {
 				});
 			}
 			setUserData(data);
-			addUserToLocalStorage(data, query);
+			addUserToLocalStorage(data, normalizedQuery);
+			setQuery("");
 		} catch (error) {
 			toast({
 				title: "Error",
@@ -36,12 +62,13 @@ const Search = ({ setUserData, setLoading }) => {
 				isClosable: true,
 			});
 		} finally {
+			setIsSubmitting(false);
 			setLoading(false);
 		}
 	};
 
 	const addUserToLocalStorage = (data, username) => {
-		const users = JSON.parse(localStorage.getItem("github-users")) || [];
+		const users = getStoredUsers();
 		const userExists = users.find((user) => user.id === username);
 
 		if (userExists) {
@@ -54,7 +81,8 @@ const Search = ({ setUserData, setLoading }) => {
 			url: data.html_url,
 		});
 
-		localStorage.setItem("github-users", JSON.stringify(users));
+		const trimmedUsers = users.slice(0, 20);
+		localStorage.setItem("github-users", JSON.stringify(trimmedUsers));
 	};
 
 	return (
@@ -62,36 +90,41 @@ const Search = ({ setUserData, setLoading }) => {
 			<Flex direction={{ base: "column", md: "row" }} gap={3} align='stretch'>
 				<InputGroup size='lg'>
 					<InputLeftElement pointerEvents='none'>
-						<SearchIcon color='blackAlpha.500' />
+						<SearchIcon color='accent.300' />
 					</InputLeftElement>
 					<Input
 						variant='filled'
 						placeholder='Type a username (example: torvalds)'
-						focusBorderColor='brand.500'
-						bg='whiteAlpha.900'
-						_hover={{ bg: "white" }}
+						focusBorderColor='accent.500'
+						bg='whiteAlpha.100'
+						color='white'
+						_hover={{ bg: "whiteAlpha.200" }}
+						_placeholder={{ color: "whiteAlpha.500" }}
 						value={query}
 						onChange={(e) => setQuery(e.target.value)}
 						border='1px solid'
-						borderColor='blackAlpha.100'
+						borderColor='whiteAlpha.300'
 						rounded='full'
+						aria-label='GitHub username input'
 					/>
 				</InputGroup>
 				<Button
 					size='lg'
 					type='submit'
-					bg='ink.800'
-					color='white'
-					_hover={{ bg: "ink.700", transform: "translateY(-1px)" }}
-					_active={{ bg: "ink.900" }}
-					disabled={!query}
+					bg='accent.500'
+					color='surface.900'
+					_hover={{ bg: "accent.400", transform: "translateY(-1px)" }}
+					_active={{ bg: "accent.600" }}
+					isDisabled={!query.trim()}
+					isLoading={isSubmitting}
+					loadingText='Searching'
 					px={8}
 				>
 					Search Profile
 				</Button>
 			</Flex>
-			<Text mt={3} color='blackAlpha.700' fontSize='sm'>
-				Press Enter or click Search Profile to load user details and repositories.
+			<Text mt={3} color='whiteAlpha.700' fontSize='sm'>
+				Press Enter to search. Results are fetched through secure server routes for production usage.
 			</Text>
 		</form>
 	);

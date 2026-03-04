@@ -11,32 +11,32 @@ const Navbar = () => {
 				<Box
 					position={"relative"}
 					aspectRatio={1}
-					boxSize={{ base: "48px", md: "56px" }}
-					bg='white'
+					boxSize={{ base: "54px", md: "62px" }}
+					bg='linear-gradient(145deg, #ff9f3f, #ff7a00)'
 					borderRadius='xl'
 					border='1px solid'
-					borderColor='blackAlpha.100'
-					boxShadow='0 10px 24px rgba(31, 41, 55, 0.08)'
+					borderColor='orange.100'
+					boxShadow='0 14px 28px rgba(255, 122, 0, 0.35)'
 					p={2}
 				>
-					<Image src={"/logo.png"} fill alt='github logo' />
+					<Image src={"/logo.png"} fill alt='GitHub logo' style={{ filter: "invert(1) contrast(1.2)" }} />
 				</Box>
 				<Box>
-					<Text fontFamily='heading' fontWeight='700' letterSpacing='-0.02em'>
+					<Text fontFamily='heading' fontWeight='700' letterSpacing='-0.02em' color='orange.100'>
 						GitHub Lens
 					</Text>
-					<Text fontSize='sm' color='blackAlpha.700'>
-						Developer Explorer
+					<Text fontSize='sm' color='whiteAlpha.700'>
+						Production Explorer
 					</Text>
 				</Box>
 			</Flex>
 			<Box ml='auto'>
 				<Button
 					size='md'
-					bg='brand.500'
-					color='white'
-					_hover={{ bg: "brand.600", transform: "translateY(-1px)" }}
-					_active={{ bg: "brand.700" }}
+					bg='accent.500'
+					color='surface.900'
+					_hover={{ bg: "accent.400", transform: "translateY(-1px)" }}
+					_active={{ bg: "accent.600" }}
 					transition='all 0.2s ease'
 					onClick={onOpen}
 				>

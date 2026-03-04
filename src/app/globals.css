@@ -6,10 +6,10 @@
 
 body {
 	min-height: 100vh;
-	background: radial-gradient(circle at 12% 18%, #f2faee 0%, #ecf8f2 24%, transparent 50%),
-		radial-gradient(circle at 82% 12%, #fff4df 0%, #fff7eb 22%, transparent 45%),
-		linear-gradient(145deg, #f9f8f2 0%, #f2f6ed 48%, #f5f3ea 100%);
-	color: #1f2937;
+	background: radial-gradient(circle at 10% 8%, rgba(255, 122, 0, 0.16) 0%, rgba(255, 122, 0, 0.03) 30%, transparent 58%),
+		radial-gradient(circle at 90% 8%, rgba(255, 140, 43, 0.2) 0%, rgba(255, 140, 43, 0.03) 32%, transparent 62%),
+		linear-gradient(152deg, #0a0d18 0%, #0f1323 44%, #0b1020 100%);
+	color: #f8f3ea;
 	font-family: var(--font-manrope), sans-serif;
 }
 
@@ -18,8 +18,8 @@ a {
 }
 
 ::selection {
-	background: #2ca57f;
-	color: #ffffff;
+	background: #ff7a00;
+	color: #0b0f1c;
 }
 
 ::-webkit-scrollbar {
@@ -27,17 +27,17 @@ a {
 }
 
 ::-webkit-scrollbar-track {
-	background: #e2e8f0;
+	background: #12182b;
 	border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb {
-	background: #96a8bf;
+	background: #354365;
 	border-radius: 999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-	background: #6c819e;
+	background: #4e608d;
 }
 
 @keyframes repo-rise {
