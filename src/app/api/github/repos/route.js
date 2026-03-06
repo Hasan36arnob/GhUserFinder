@@ -18,6 +18,7 @@ export async function GET(request) {
 		const headers = {
 			Accept: "application/vnd.github+json",
 		};
+		//e
 
 		if (process.env.GITHUB_TOKEN) {
 			headers.Authorization = `Bearer ${process.env.GITHUB_TOKEN}`;
