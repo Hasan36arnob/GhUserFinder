@@ -41,16 +41,14 @@ const Repos = ({ username }) => {
 
 	return (
 		<>
-			<Text
-				textAlign={"center"}
-				letterSpacing={1}
-				fontSize={{ base: "2xl", md: "3xl" }}
-				fontWeight={"800"}
-				color={"accent.200"}
-				mt={10}
-			>
-				Top Repositories
-			</Text>
+			<Flex align='center' justify='space-between' mt={10} mb={4} gap={3} wrap='wrap'>
+				<Text letterSpacing={1} fontSize={{ base: "2xl", md: "3xl" }} fontWeight={"800"} color={"accent.200"}>
+					Top Repositories
+				</Text>
+				<Badge px={3} py={1} borderRadius='full' bg='whiteAlpha.200' color='orange.100' fontSize='0.72em'>
+					Sorted by stars
+				</Badge>
+			</Flex>
 			{loading && (
 				<Flex justifyContent={"center"}>
 					<Spinner size={"xl"} my={5} color='accent.400' thickness='4px' />
@@ -67,19 +65,20 @@ const Repos = ({ username }) => {
 				<Box
 					key={repo.id}
 					p={{ base: 4, md: 5 }}
-					bg={"whiteAlpha.100"}
+					bg='linear-gradient(145deg, rgba(255,255,255,0.13), rgba(255,255,255,0.05))'
 					my={4}
 					borderRadius='xl'
 					border='1px solid'
-					borderColor='whiteAlpha.300'
-					boxShadow='0 12px 28px rgba(0, 0, 0, 0.25)'
+					borderColor='whiteAlpha.400'
+					boxShadow='0 14px 34px rgba(0, 0, 0, 0.3)'
 					animation='repo-rise 0.45s ease both'
 					style={{ animationDelay: `${idx * 90}ms` }}
-					_hover={{ transform: "translateY(-2px)", boxShadow: "0 18px 32px rgba(0, 0, 0, 0.35)" }}
+					_hover={{ transform: "translateY(-3px)", boxShadow: "0 22px 38px rgba(0, 0, 0, 0.4)" }}
 					transition='all 0.2s ease'
 				>
 					<Flex direction={{ base: "column", md: "row" }} justifyContent='space-between' gap={4} alignItems='start'>
 						<Flex flex={1} direction={"column"} gap={1}>
+							<Badge w='fit-content' mb={1} colorScheme='yellow'>{`#${idx + 1}`}</Badge>
 							<Link href={repo.html_url} isExternal fontSize={{ base: "lg", md: "xl" }} fontWeight={"700"} color='orange.100'>
 								{repo.name}
 							</Link>
@@ -92,13 +91,13 @@ const Repos = ({ username }) => {
 						</Flex>
 
 						<Flex gap={3} w={{ base: "full", md: "auto" }} flexWrap='wrap'>
-							<Badge fontSize={"0.82em"} colorScheme='orange' textAlign={"center"} px={3} py={2}>
+							<Badge fontSize={"0.82em"} bg='orange.200' color='surface.900' textAlign={"center"} px={3} py={2}>
 								Stars: {repo.stargazers_count}
 							</Badge>
-							<Badge fontSize={"0.82em"} colorScheme='pink' textAlign={"center"} px={3} py={2}>
+							<Badge fontSize={"0.82em"} bg='pink.200' color='surface.900' textAlign={"center"} px={3} py={2}>
 								Forks: {repo.forks_count}
 							</Badge>
-							<Badge fontSize={"0.82em"} colorScheme='cyan' textAlign={"center"} px={3} py={2}>
+							<Badge fontSize={"0.82em"} bg='cyan.200' color='surface.900' textAlign={"center"} px={3} py={2}>
 								Watchers: {repo.watchers_count}
 							</Badge>
 						</Flex>
