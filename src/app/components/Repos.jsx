@@ -5,6 +5,10 @@ import { Link } from "@chakra-ui/next-js";
 
 const USERNAME_REGEX = /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i;
 const DEFAULT_ERROR_MESSAGE = "Unable to load repositories right now.";
+const ACTIVE_WINDOW_DAYS = 180;
+
+const clamp = (value, min, max) => Math.min(max, Math.max(min, value));
+const ratio = (part, total) => (total > 0 ? part / total : 0);
 
 const Repos = ({ username }) => {
 	const toast = useToast();
@@ -81,6 +85,56 @@ const Repos = ({ username }) => {
 		return [...repos].sort((a, b) => b.stargazers_count - a.stargazers_count);
 	}, [repos]);
 
+	const signalInsights = useMemo(() => {
+		if (!sortedRepos.length) {
+			return null;
+		}
+
+		const now = Date.now();
+		const activeWindowMs = ACTIVE_WINDOW_DAYS * 24 * 60 * 60 * 1000;
+		const activeRepos = sortedRepos.filter((repo) => {
+			const date = new Date(repo.pushed_at || repo.updated_at).getTime();
+			return Number.isFinite(date) && now - date <= activeWindowMs;
+		}).length;
+		const originalRepos = sortedRepos.filter((repo) => !repo.fork && !repo.archived && !repo.disabled).length;
+		const healthyRepos = sortedRepos.filter((repo) => !repo.archived && !repo.disabled && repo.open_issues_count <= 25).length;
+		const documentedRepos = sortedRepos.filter((repo) => repo.description || repo.homepage).length;
+		const totalStars = sortedRepos.reduce((sum, repo) => sum + repo.stargazers_count, 0);
+		const totalForks = sortedRepos.reduce((sum, repo) => sum + repo.forks_count, 0);
+
+		const activity = ratio(activeRepos, sortedRepos.length);
+		const originality = ratio(originalRepos, sortedRepos.length);
+		const maintainability = ratio(healthyRepos, sortedRepos.length);
+		const documentation = ratio(documentedRepos, sortedRepos.length);
+		const collaboration = clamp(totalForks / Math.max(1, sortedRepos.length * 2), 0, 1);
+		const starPower = clamp(totalStars / 500, 0, 1);
+
+		const trustScore = Math.round(
+			starPower * 30 +
+				activity * 24 +
+				originality * 18 +
+				maintainability * 16 +
+				documentation * 7 +
+				collaboration * 5,
+		);
+
+		let tier = "Foundation";
+		if (trustScore >= 80) tier = "Elite";
+		else if (trustScore >= 65) tier = "Growth";
+		else if (trustScore >= 50) tier = "Builder";
+
+		return {
+			trustScore,
+			tier,
+			activity,
+			originality,
+			maintainability,
+			documentation,
+			totalStars,
+			totalForks,
+		};
+	}, [sortedRepos]);
+
 	const visibleRepos = showMore ? sortedRepos : sortedRepos.slice(0, 5);
 
 	return (
@@ -93,6 +147,47 @@ const Repos = ({ username }) => {
 					Sorted by stars
 				</Badge>
 			</Flex>
+			{signalInsights && (
+				<Box
+					p={{ base: 4, md: 5 }}
+					mb={4}
+					bg='linear-gradient(135deg, rgba(255,170,85,0.22), rgba(255,122,0,0.08))'
+					border='1px solid'
+					borderColor='orange.200'
+					borderRadius='xl'
+				>
+					<Flex justify='space-between' align={{ base: "start", md: "center" }} direction={{ base: "column", md: "row" }} gap={3}>
+						<Box>
+							<Text fontSize='xs' color='orange.100' letterSpacing={0.8} fontWeight='700'>
+								UNCOMMON VALUE: GITHUB TRUST SIGNAL ENGINE
+							</Text>
+							<Text mt={1} fontSize={{ base: "lg", md: "xl" }} fontWeight='800' color='white'>
+								Score: {signalInsights.trustScore}/100 ({signalInsights.tier} Tier)
+							</Text>
+							<Text mt={1} fontSize='sm' color='whiteAlpha.800'>
+								This composite score is built from activity, originality, maintainability, documentation, and collaboration signals.
+							</Text>
+						</Box>
+						<Badge px={3} py={2} borderRadius='full' bg='orange.200' color='surface.900' fontSize='0.8em'>
+							Total Influence: {numberFormatter.format(signalInsights.totalStars + signalInsights.totalForks)}
+						</Badge>
+					</Flex>
+					<Flex mt={4} gap={2} wrap='wrap'>
+						<Badge bg='whiteAlpha.200' px={3} py={1} color='orange.50'>
+							Activity {Math.round(signalInsights.activity * 100)}%
+						</Badge>
+						<Badge bg='whiteAlpha.200' px={3} py={1} color='orange.50'>
+							Originality {Math.round(signalInsights.originality * 100)}%
+						</Badge>
+						<Badge bg='whiteAlpha.200' px={3} py={1} color='orange.50'>
+							Maintainability {Math.round(signalInsights.maintainability * 100)}%
+						</Badge>
+						<Badge bg='whiteAlpha.200' px={3} py={1} color='orange.50'>
+							Documentation {Math.round(signalInsights.documentation * 100)}%
+						</Badge>
+					</Flex>
+				</Box>
+			)}
 			{loading && (
 				<Flex justifyContent={"center"}>
 					<Spinner size={"xl"} my={5} color='accent.400' thickness='4px' />

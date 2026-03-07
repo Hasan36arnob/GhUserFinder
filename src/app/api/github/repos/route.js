@@ -16,6 +16,10 @@ function toNumber(value) {
 	return Number.isFinite(value) ? value : 0;
 }
 
+function toBoolean(value) {
+	return typeof value === "boolean" ? value : false;
+}
+
 function normalizeRepo(repo) {
 	if (!repo || typeof repo !== "object") {
 		return null;
@@ -36,6 +40,13 @@ function normalizeRepo(repo) {
 		forks_count: toNumber(repo.forks_count),
 		watchers_count: toNumber(repo.watchers_count),
 		updated_at: toText(repo.updated_at),
+		pushed_at: toText(repo.pushed_at),
+		open_issues_count: toNumber(repo.open_issues_count),
+		default_branch: toText(repo.default_branch),
+		homepage: toNullableText(repo.homepage),
+		fork: toBoolean(repo.fork),
+		archived: toBoolean(repo.archived),
+		disabled: toBoolean(repo.disabled),
 	};
 }
 

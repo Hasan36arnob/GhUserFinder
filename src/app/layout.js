@@ -20,7 +20,7 @@ export const metadata = {
 		default: "GitHub Lens",
 		template: "%s | GitHub Lens",
 	},
-	description: "GitHub Lens helps recruiters, founders, and agencies analyze developer profiles fast with premium UI and actionable repository insights.",
+	description: "GitHub Lens Decision Passport gives recruiters and founders a proprietary developer trust score, risk flags, and hiring-fit verdict from GitHub data.",
 	applicationName: "GitHub Lens",
 	keywords: [
 		"GitHub profile analysis",
@@ -29,6 +29,9 @@ export const metadata = {
 		"hire developers",
 		"tech recruiting tool",
 		"freelancer GitHub audit",
+		"developer trust score",
+		"hiring risk analysis",
+		"github decision passport",
 	],
 	alternates: {
 		canonical: "/",
@@ -37,7 +40,7 @@ export const metadata = {
 	creator: "GitHub Lens",
 	openGraph: {
 		title: "GitHub Lens",
-		description: "Analyze GitHub developers in seconds and turn profile data into hiring or outreach decisions.",
+		description: "Get a proprietary trust score and hiring decision passport from public GitHub signals.",
 		type: "website",
 		siteName: "GitHub Lens",
 		url: siteUrl,
@@ -45,7 +48,7 @@ export const metadata = {
 	twitter: {
 		card: "summary_large_image",
 		title: "GitHub Lens",
-		description: "Fast GitHub profile analysis for hiring and business decisions.",
+		description: "Unique GitHub Decision Passport for hiring confidence and risk filtering.",
 	},
 	robots: {
 		index: true,

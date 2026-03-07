@@ -8,7 +8,7 @@ import UserProfile from "./components/UserProfile";
 
 const BKASH_NUMBER = "01915215080";
 const WHATSAPP_NUMBER = "01943739336";
-const WHATSAPP_LINK = `https://wa.me/8801943739336?text=${encodeURIComponent("Hi, I want the GitHub Lens premium audit package.")}`;
+const WHATSAPP_LINK = `https://wa.me/8801943739336?text=${encodeURIComponent("Hi, I want to order the GitHub Lens Decision Passport.")}`;
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export default function Home() {
@@ -18,8 +18,8 @@ export default function Home() {
 	const serviceJsonLd = {
 		"@context": "https://schema.org",
 		"@type": "Service",
-		name: "GitHub Lens Premium Audit",
-		serviceType: "GitHub profile analysis",
+		name: "GitHub Lens Decision Passport",
+		serviceType: "Developer due-diligence and hiring confidence scoring",
 		provider: {
 			"@type": "Organization",
 			name: "GitHub Lens",
@@ -30,7 +30,7 @@ export default function Home() {
 		offers: {
 			"@type": "Offer",
 			priceCurrency: "BDT",
-			price: "299",
+			price: "499",
 			availability: "https://schema.org/InStock",
 		},
 	};
@@ -72,10 +72,10 @@ export default function Home() {
 					bgGradient='linear(to-r, orange.200, accent.300, orange.100)'
 					bgClip='text'
 				>
-					Use GitHub data to close your first paying client.
+					Sell a Decision Passport nobody else gives.
 				</Heading>
 				<Text mt={4} color='whiteAlpha.800' maxW='60ch' fontSize={{ base: "md", md: "lg" }}>
-					Analyze developers in seconds, then offer premium GitHub audits for hiring teams, agencies, and founders.
+					Turn public GitHub data into a buyer-ready hiring confidence report with trust score, risk flags, and action steps.
 				</Text>
 				<Flex mt={5} gap={3} wrap='wrap'>
 					<Badge px={3} py={1} borderRadius='full' bg='whiteAlpha.200' color='orange.100'>
@@ -106,15 +106,15 @@ export default function Home() {
 				>
 					<Box>
 						<Text fontFamily='heading' fontSize='lg' fontWeight='700' color='orange.100'>
-							Launch Offer: Premium Audit (BDT 299)
+							Flagship Offer: Decision Passport (BDT 499)
 						</Text>
 						<Text color='orange.50' fontSize='sm'>
-							Promise a clear deliverable: profile score, repo quality notes, and hiring recommendation.
+							Deliverable includes Trust Score, Red Flag summary, Hiring Fit tier, and 24-hour action recommendation.
 						</Text>
 					</Box>
 					<Flex gap={3} direction={{ base: "column", sm: "row" }} w={{ base: "full", md: "auto" }}>
 						<Button as='a' href={WHATSAPP_LINK} target='_blank' rel='noopener noreferrer' bg='orange.300' color='surface.900' _hover={{ bg: "orange.200", textDecoration: "none" }}>
-							Book on WhatsApp
+							Order Decision Passport
 						</Button>
 						<Button as='a' href={`tel:${BKASH_NUMBER}`} bg='orange.100' color='surface.900' _hover={{ bg: "orange.200", textDecoration: "none" }}>
 							Pay via bKash
@@ -135,19 +135,19 @@ export default function Home() {
 				<Box flex={1} p={5} borderRadius='xl' border='1px solid' borderColor='whiteAlpha.300' bg='whiteAlpha.100'>
 					<Text fontSize='xl' fontWeight='800' color='accent.200'>Why buyers pay</Text>
 					<Text mt={2} color='whiteAlpha.800'>
-						They want faster technical screening with less risk. Your audit gives them a decision-ready summary.
+						They do not want another generic profile read. They want a clear go/no-go decision with risk visibility.
 					</Text>
 				</Box>
 				<Box flex={1} p={5} borderRadius='xl' border='1px solid' borderColor='whiteAlpha.300' bg='whiteAlpha.100'>
-					<Text fontSize='xl' fontWeight='800' color='accent.200'>Simple pricing ladder</Text>
+					<Text fontSize='xl' fontWeight='800' color='accent.200'>Uncommon product edge</Text>
 					<Text mt={2} color='whiteAlpha.800'>
-						Start with BDT 299, then upsell deeper reports and shortlist packages for teams.
+						Your Trust Signal Engine scorecard is a proprietary output. Clients cannot get that from normal GitHub tools.
 					</Text>
 				</Box>
 				<Box flex={1} p={5} borderRadius='xl' border='1px solid' borderColor='whiteAlpha.300' bg='whiteAlpha.100'>
 					<Text fontSize='xl' fontWeight='800' color='accent.200'>One-step conversion</Text>
 					<Text mt={2} color='whiteAlpha.800'>
-						User sees value, taps WhatsApp, and pays by bKash. Low friction gets you your first revenue faster.
+						User tests live signals, sees the score, taps WhatsApp, then pays via bKash. Fast trust, fast conversion.
 					</Text>
 				</Box>
 			</Flex>
