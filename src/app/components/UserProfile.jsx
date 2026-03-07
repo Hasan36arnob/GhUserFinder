@@ -1,12 +1,34 @@
 import { Avatar, Badge, Box, Button, Divider, Flex, HStack, Link, Text, VStack } from "@/app/chakra";
 import Repos from "./Repos";
 
+const normalizeExternalUrl = (value) => {
+	if (!value || typeof value !== "string") {
+		return null;
+	}
+
+	const trimmed = value.trim();
+	if (!trimmed) {
+		return null;
+	}
+
+	if (/^https?:\/\//i.test(trimmed)) {
+		return trimmed;
+	}
+
+	return `https://${trimmed}`;
+};
+
 const UserProfile = ({ userData }) => {
+	const blogHref = normalizeExternalUrl(userData.blog);
+	const memberSince = Number.isNaN(new Date(userData.created_at).getTime())
+		? "Not available"
+		: new Date(userData.created_at).toLocaleDateString();
+
 	const infoRows = [
 		{ label: "Company", value: userData.company || "Not specified" },
 		{ label: "Location", value: userData.location || "Not specified" },
-		{ label: "Blog / Website", value: userData.blog || "Not specified", href: userData.blog || null },
-		{ label: "Member Since", value: new Date(userData.created_at).toLocaleDateString() },
+		{ label: "Blog / Website", value: userData.blog || "Not specified", href: blogHref },
+		{ label: "Member Since", value: memberSince },
 	];
 
 	return (

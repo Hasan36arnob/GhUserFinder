@@ -1,11 +1,15 @@
 "use client";
 import { Button, Flex, Input, InputGroup, InputLeftElement, Text, useToast } from "@/app/chakra";
 import { SearchIcon } from "@chakra-ui/icons";
-import { useState } from "react";
+import { useRef, useState } from "react";
+
+const USERNAME_REGEX = /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i;
+const DEFAULT_ERROR_MESSAGE = "Unable to fetch this GitHub profile right now.";
 
 const Search = ({ setUserData, setLoading }) => {
 	const [query, setQuery] = useState("");
 	const [isSubmitting, setIsSubmitting] = useState(false);
+	const activeControllerRef = useRef(null);
 	const toast = useToast();
 
 	const getStoredUsers = () => {
@@ -22,7 +26,7 @@ const Search = ({ setUserData, setLoading }) => {
 		const normalizedQuery = query.trim();
 		if (!normalizedQuery) return;
 
-		if (!/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i.test(normalizedQuery)) {
+		if (!USERNAME_REGEX.test(normalizedQuery)) {
 			toast({
 				title: "Invalid username",
 				description: "Use a valid GitHub username format.",
@@ -36,15 +40,25 @@ const Search = ({ setUserData, setLoading }) => {
 		setIsSubmitting(true);
 		setLoading(true);
 		setUserData(null);
+		activeControllerRef.current?.abort();
+		const controller = new AbortController();
+		activeControllerRef.current = controller;
 
 		try {
-			const res = await fetch(`/api/github/users/${encodeURIComponent(normalizedQuery)}`);
-			const data = await res.json();
+			const res = await fetch(`/api/github/users/${encodeURIComponent(normalizedQuery)}`, {
+				signal: controller.signal,
+			});
+			let data = null;
+			try {
+				data = await res.json();
+			} catch {
+				data = null;
+			}
 
-			if (!res.ok || data.message) {
+			if (!res.ok || data?.message) {
 				return toast({
 					title: "Error",
-					description: data.message === "Not Found" ? "User not found" : data.message,
+					description: data?.message === "Not Found" ? "User not found" : data?.message || DEFAULT_ERROR_MESSAGE,
 					status: "error",
 					duration: 3000,
 					isClosable: true,
@@ -54,14 +68,21 @@ const Search = ({ setUserData, setLoading }) => {
 			addUserToLocalStorage(data, normalizedQuery);
 			setQuery("");
 		} catch (error) {
+			if (error?.name === "AbortError") {
+				return;
+			}
+
 			toast({
 				title: "Error",
-				description: error.message,
+				description: error?.message || DEFAULT_ERROR_MESSAGE,
 				status: "error",
 				duration: 3000,
 				isClosable: true,
 			});
 		} finally {
+			if (activeControllerRef.current === controller) {
+				activeControllerRef.current = null;
+			}
 			setIsSubmitting(false);
 			setLoading(false);
 		}

@@ -3,34 +3,78 @@ import { Badge, Box, Button, Flex, Spinner, Text, useToast } from "@chakra-ui/re
 import React, { useMemo, useEffect, useState } from "react";
 import { Link } from "@chakra-ui/next-js";
 
+const USERNAME_REGEX = /^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i;
+const DEFAULT_ERROR_MESSAGE = "Unable to load repositories right now.";
+
 const Repos = ({ username }) => {
 	const toast = useToast();
 	const [repos, setRepos] = useState([]);
 	const [loading, setLoading] = useState(false);
 	const [showMore, setShowMore] = useState(false);
+	const [errorMessage, setErrorMessage] = useState("");
+	const numberFormatter = useMemo(() => new Intl.NumberFormat(), []);
 
 	useEffect(() => {
+		setShowMore(false);
+	}, [username]);
+
+	useEffect(() => {
+		if (!username || !USERNAME_REGEX.test(username.trim())) {
+			setRepos([]);
+			setErrorMessage("Invalid GitHub username.");
+			setLoading(false);
+			return undefined;
+		}
+
+		const controller = new AbortController();
+
 		const fetchRepos = async () => {
 			try {
 				setLoading(true);
-				const res = await fetch(`/api/github/repos?username=${encodeURIComponent(username)}`);
-				const data = await res.json();
-				if (!res.ok || data.message) throw new Error(data.message);
+				setErrorMessage("");
+				const res = await fetch(`/api/github/repos?username=${encodeURIComponent(username.trim())}`, {
+					signal: controller.signal,
+				});
+
+				let data = null;
+				try {
+					data = await res.json();
+				} catch {
+					data = null;
+				}
+
+				if (!res.ok) {
+					throw new Error(data?.message || DEFAULT_ERROR_MESSAGE);
+				}
+
+				if (!Array.isArray(data)) {
+					throw new Error("Unexpected repository payload.");
+				}
+
 				setRepos(data);
 			} catch (error) {
+				if (error?.name === "AbortError") {
+					return;
+				}
+
+				const message = error?.message || DEFAULT_ERROR_MESSAGE;
+				setErrorMessage(message);
 				toast({
 					title: "Error",
-					description: error.message,
+					description: message,
 					status: "error",
 					duration: 3000,
 					isClosable: true,
 				});
 			} finally {
-				setLoading(false);
+				if (!controller.signal.aborted) {
+					setLoading(false);
+				}
 			}
 		};
 
 		fetchRepos();
+		return () => controller.abort();
 	}, [username, toast]);
 
 	const sortedRepos = useMemo(() => {
@@ -57,7 +101,7 @@ const Repos = ({ username }) => {
 
 			{!loading && sortedRepos.length === 0 && (
 				<Text textAlign='center' mt={4} color='whiteAlpha.700'>
-					No public repositories available.
+					{errorMessage || "No public repositories available."}
 				</Text>
 			)}
 
@@ -92,13 +136,13 @@ const Repos = ({ username }) => {
 
 						<Flex gap={3} w={{ base: "full", md: "auto" }} flexWrap='wrap'>
 							<Badge fontSize={"0.82em"} bg='orange.200' color='surface.900' textAlign={"center"} px={3} py={2}>
-								Stars: {repo.stargazers_count}
+								Stars: {numberFormatter.format(repo.stargazers_count)}
 							</Badge>
 							<Badge fontSize={"0.82em"} bg='pink.200' color='surface.900' textAlign={"center"} px={3} py={2}>
-								Forks: {repo.forks_count}
+								Forks: {numberFormatter.format(repo.forks_count)}
 							</Badge>
 							<Badge fontSize={"0.82em"} bg='cyan.200' color='surface.900' textAlign={"center"} px={3} py={2}>
-								Watchers: {repo.watchers_count}
+								Watchers: {numberFormatter.format(repo.watchers_count)}
 							</Badge>
 						</Flex>
 					</Flex>
