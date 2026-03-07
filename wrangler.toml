@@ -1,0 +1,4 @@
+name = "yt-github"
+compatibility_date = "2026-03-07"
+pages_build_output_dir = ".vercel/output/static"
+

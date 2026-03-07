@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "cf:build": "npx @cloudflare/next-on-pages@1",
+    "cf:deploy": "wrangler pages deploy"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.19",
