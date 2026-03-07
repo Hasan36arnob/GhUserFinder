@@ -20,23 +20,43 @@ export const metadata = {
 		default: "GitHub Lens",
 		template: "%s | GitHub Lens",
 	},
-	description: "Production-grade GitHub profile explorer with repository insights and history.",
+	description: "GitHub Lens helps recruiters, founders, and agencies analyze developer profiles fast with premium UI and actionable repository insights.",
 	applicationName: "GitHub Lens",
-	keywords: ["GitHub", "profile finder", "repositories", "developer portfolio"],
+	keywords: [
+		"GitHub profile analysis",
+		"developer portfolio checker",
+		"GitHub repository insights",
+		"hire developers",
+		"tech recruiting tool",
+		"freelancer GitHub audit",
+	],
+	alternates: {
+		canonical: "/",
+	},
+	category: "technology",
+	creator: "GitHub Lens",
 	openGraph: {
 		title: "GitHub Lens",
-		description: "Explore GitHub users, profiles, and top repositories in a premium interface.",
+		description: "Analyze GitHub developers in seconds and turn profile data into hiring or outreach decisions.",
 		type: "website",
 		siteName: "GitHub Lens",
+		url: siteUrl,
 	},
 	twitter: {
 		card: "summary_large_image",
 		title: "GitHub Lens",
-		description: "Find GitHub developers and analyze their repositories quickly.",
+		description: "Fast GitHub profile analysis for hiring and business decisions.",
 	},
 	robots: {
 		index: true,
 		follow: true,
+		googleBot: {
+			index: true,
+			follow: true,
+			"max-image-preview": "large",
+			"max-snippet": -1,
+			"max-video-preview": -1,
+		},
 	},
 };
 
