@@ -18,8 +18,8 @@ export default function Home() {
 	const serviceJsonLd = {
 		"@context": "https://schema.org",
 		"@type": "Service",
-		name: "GitHub Lens Decision Passport",
-		serviceType: "Developer due-diligence and hiring confidence scoring",
+		name: "GitHub Lens Hiring Report",
+		serviceType: "Simple GitHub profile review report",
 		provider: {
 			"@type": "Organization",
 			name: "GitHub Lens",
@@ -72,20 +72,20 @@ export default function Home() {
 					bgGradient='linear(to-r, orange.200, accent.300, orange.100)'
 					bgClip='text'
 				>
-					Sell a Decision Passport nobody else gives.
+					Check any GitHub profile in seconds.
 				</Heading>
 				<Text mt={4} color='whiteAlpha.800' maxW='60ch' fontSize={{ base: "md", md: "lg" }}>
-					Turn public GitHub data into a buyer-ready hiring confidence report with trust score, risk flags, and action steps.
+					Get a clear report with strengths, risks, and a simple hiring recommendation.
 				</Text>
 				<Flex mt={5} gap={3} wrap='wrap'>
 					<Badge px={3} py={1} borderRadius='full' bg='whiteAlpha.200' color='orange.100'>
-						SEO Friendly
+						Easy to use
 					</Badge>
 					<Badge px={3} py={1} borderRadius='full' bg='whiteAlpha.200' color='orange.100'>
-						Conversion Ready
+						Clear report
 					</Badge>
 					<Badge px={3} py={1} borderRadius='full' bg='whiteAlpha.200' color='orange.100'>
-						Clear Offer
+						Fast results
 					</Badge>
 				</Flex>
 				<Box mt={{ base: 6, md: 8 }}>
@@ -106,15 +106,15 @@ export default function Home() {
 				>
 					<Box>
 						<Text fontFamily='heading' fontSize='lg' fontWeight='700' color='orange.100'>
-							Flagship Offer: Decision Passport (BDT 499)
+							Premium Report (BDT 499)
 						</Text>
 						<Text color='orange.50' fontSize='sm'>
-							Deliverable includes Trust Score, Red Flag summary, Hiring Fit tier, and 24-hour action recommendation.
+							Includes profile score, risk summary, and a clear yes/no hiring suggestion.
 						</Text>
 					</Box>
 					<Flex gap={3} direction={{ base: "column", sm: "row" }} w={{ base: "full", md: "auto" }}>
 						<Button as='a' href={WHATSAPP_LINK} target='_blank' rel='noopener noreferrer' bg='orange.300' color='surface.900' _hover={{ bg: "orange.200", textDecoration: "none" }}>
-							Order Decision Passport
+							Order Report
 						</Button>
 						<Button as='a' href={`tel:${BKASH_NUMBER}`} bg='orange.100' color='surface.900' _hover={{ bg: "orange.200", textDecoration: "none" }}>
 							Pay via bKash
@@ -133,21 +133,21 @@ export default function Home() {
 
 			<Flex mt={10} mb={20} direction={{ base: "column", lg: "row" }} gap={5} align='stretch'>
 				<Box flex={1} p={5} borderRadius='xl' border='1px solid' borderColor='whiteAlpha.300' bg='whiteAlpha.100'>
-					<Text fontSize='xl' fontWeight='800' color='accent.200'>Why buyers pay</Text>
+					<Text fontSize='xl' fontWeight='800' color='accent.200'>Why people buy</Text>
 					<Text mt={2} color='whiteAlpha.800'>
-						They do not want another generic profile read. They want a clear go/no-go decision with risk visibility.
+						They need a quick and simple decision before hiring.
 					</Text>
 				</Box>
 				<Box flex={1} p={5} borderRadius='xl' border='1px solid' borderColor='whiteAlpha.300' bg='whiteAlpha.100'>
-					<Text fontSize='xl' fontWeight='800' color='accent.200'>Uncommon product edge</Text>
+					<Text fontSize='xl' fontWeight='800' color='accent.200'>What is special</Text>
 					<Text mt={2} color='whiteAlpha.800'>
-						Your Trust Signal Engine scorecard is a proprietary output. Clients cannot get that from normal GitHub tools.
+						Your site gives one simple score from many signals, so clients understand quickly.
 					</Text>
 				</Box>
 				<Box flex={1} p={5} borderRadius='xl' border='1px solid' borderColor='whiteAlpha.300' bg='whiteAlpha.100'>
-					<Text fontSize='xl' fontWeight='800' color='accent.200'>One-step conversion</Text>
+					<Text fontSize='xl' fontWeight='800' color='accent.200'>Simple payment flow</Text>
 					<Text mt={2} color='whiteAlpha.800'>
-						User tests live signals, sees the score, taps WhatsApp, then pays via bKash. Fast trust, fast conversion.
+						See score, message on WhatsApp, then pay with bKash.
 					</Text>
 				</Box>
 			</Flex>
@@ -167,7 +167,7 @@ export default function Home() {
 				boxShadow='0 14px 34px rgba(0,0,0,0.35)'
 			>
 				<Text fontSize='xs' color='orange.100' letterSpacing={0.6} fontWeight='700'>
-					SUPPORT / CONTACT
+					CONTACT
 				</Text>
 				<Text mt={1} fontSize='sm' color='whiteAlpha.900'>
 					bKash: {BKASH_NUMBER}

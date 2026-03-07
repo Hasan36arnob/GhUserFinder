@@ -144,7 +144,7 @@ const Repos = ({ username }) => {
 					Top Repositories
 				</Text>
 				<Badge px={3} py={1} borderRadius='full' bg='whiteAlpha.200' color='orange.100' fontSize='0.72em'>
-					Sorted by stars
+					Most stars first
 				</Badge>
 			</Flex>
 			{signalInsights && (
@@ -157,21 +157,21 @@ const Repos = ({ username }) => {
 					borderRadius='xl'
 				>
 					<Flex justify='space-between' align={{ base: "start", md: "center" }} direction={{ base: "column", md: "row" }} gap={3}>
-						<Box>
-							<Text fontSize='xs' color='orange.100' letterSpacing={0.8} fontWeight='700'>
-								UNCOMMON VALUE: GITHUB TRUST SIGNAL ENGINE
-							</Text>
-							<Text mt={1} fontSize={{ base: "lg", md: "xl" }} fontWeight='800' color='white'>
-								Score: {signalInsights.trustScore}/100 ({signalInsights.tier} Tier)
-							</Text>
-							<Text mt={1} fontSize='sm' color='whiteAlpha.800'>
-								This composite score is built from activity, originality, maintainability, documentation, and collaboration signals.
-							</Text>
-						</Box>
-						<Badge px={3} py={2} borderRadius='full' bg='orange.200' color='surface.900' fontSize='0.8em'>
-							Total Influence: {numberFormatter.format(signalInsights.totalStars + signalInsights.totalForks)}
-						</Badge>
-					</Flex>
+							<Box>
+								<Text fontSize='xs' color='orange.100' letterSpacing={0.8} fontWeight='700'>
+									GITHUB HEALTH SCORE
+								</Text>
+								<Text mt={1} fontSize={{ base: "lg", md: "xl" }} fontWeight='800' color='white'>
+									Score: {signalInsights.trustScore}/100 ({signalInsights.tier} Tier)
+								</Text>
+								<Text mt={1} fontSize='sm' color='whiteAlpha.800'>
+									This score combines recent activity, original work, repo quality, and documentation.
+								</Text>
+							</Box>
+							<Badge px={3} py={2} borderRadius='full' bg='orange.200' color='surface.900' fontSize='0.8em'>
+								Stars + Forks: {numberFormatter.format(signalInsights.totalStars + signalInsights.totalForks)}
+							</Badge>
+						</Flex>
 					<Flex mt={4} gap={2} wrap='wrap'>
 						<Badge bg='whiteAlpha.200' px={3} py={1} color='orange.50'>
 							Activity {Math.round(signalInsights.activity * 100)}%

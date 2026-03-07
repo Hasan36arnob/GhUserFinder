@@ -1,4 +1,5 @@
 import { Avatar, Badge, Box, Button, Divider, Flex, HStack, Link, Text, VStack } from "@/app/chakra";
+import PremiumReport from "./PremiumReport";
 import Repos from "./Repos";
 
 const normalizeExternalUrl = (value) => {
@@ -115,6 +116,8 @@ const UserProfile = ({ userData }) => {
 					</Box>
 				</VStack>
 			</Flex>
+
+			<PremiumReport username={userData.login} />
 
 			<Repos username={userData.login} />
 		</>
