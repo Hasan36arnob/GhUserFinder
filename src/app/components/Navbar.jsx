@@ -26,7 +26,7 @@ const Navbar = () => {
 						GitHub Lens
 					</Text>
 					<Text fontSize='sm' color='whiteAlpha.700'>
-						Free Report Studio
+						Production Explorer
 					</Text>
 				</Box>
 			</Flex>

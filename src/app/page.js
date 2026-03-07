@@ -91,45 +91,6 @@ export default function Home() {
 				<Box mt={{ base: 6, md: 8 }}>
 					<Search setUserData={(res) => setUserData(res)} setLoading={setLoading} />
 				</Box>
-				<Flex mt={6} gap={3} wrap='wrap'>
-					<Badge bg='orange.200' color='surface.900' px={3} py={1}>
-						1,000+ profiles analyzed
-					</Badge>
-					<Badge bg='pink.200' color='surface.900' px={3} py={1}>
-						Free report in under 1 minute
-					</Badge>
-					<Badge bg='cyan.200' color='surface.900' px={3} py={1}>
-						Direct WhatsApp support
-					</Badge>
-				</Flex>
-
-				<Flex
-					mt={6}
-					p={{ base: 4, md: 5 }}
-					borderRadius='xl'
-					border='1px solid'
-					borderColor='orange.200'
-					bg='linear-gradient(135deg, rgba(255,170,85,0.22), rgba(255,122,0,0.07))'
-					direction={{ base: "column", md: "row" }}
-					align={{ base: "start", md: "center" }}
-					justify='space-between'
-					gap={3}
-				>
-					<Box>
-						<Text color='orange.100' fontWeight='700'>Get your free report now</Text>
-						<Text color='whiteAlpha.800' fontSize='sm'>
-							Send username on WhatsApp and get a plain-language profile decision quickly.
-						</Text>
-					</Box>
-					<Flex gap={2} w={{ base: "full", md: "auto" }} direction={{ base: "column", sm: "row" }}>
-						<Button as='a' href={WHATSAPP_LINK} target='_blank' rel='noopener noreferrer' bg='orange.300' color='surface.900' _hover={{ bg: "orange.200", textDecoration: "none" }}>
-							Get Free Report
-						</Button>
-						<Button as='a' href={`tel:${BKASH_NUMBER}`} bg='orange.100' color='surface.900' _hover={{ bg: "orange.200", textDecoration: "none" }}>
-							Donate on bKash
-						</Button>
-					</Flex>
-				</Flex>
 
 			</Box>
 
