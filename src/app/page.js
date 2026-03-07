@@ -8,7 +8,7 @@ import UserProfile from "./components/UserProfile";
 
 const BKASH_NUMBER = "01915215080";
 const WHATSAPP_NUMBER = "01943739336";
-const WHATSAPP_LINK = `https://wa.me/8801943739336?text=${encodeURIComponent("Hi, I want to order the GitHub Lens Decision Passport.")}`;
+const WHATSAPP_LINK = `https://wa.me/8801943739336?text=${encodeURIComponent("Hi, I want the free premium report.")}`;
 const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000";
 
 export default function Home() {
@@ -30,7 +30,7 @@ export default function Home() {
 		offers: {
 			"@type": "Offer",
 			priceCurrency: "BDT",
-			price: "499",
+			price: "0",
 			availability: "https://schema.org/InStock",
 		},
 	};
@@ -92,35 +92,6 @@ export default function Home() {
 					<Search setUserData={(res) => setUserData(res)} setLoading={setLoading} />
 				</Box>
 
-				<Flex
-					mt={7}
-					p={{ base: 4, md: 5 }}
-					bg='linear-gradient(135deg, rgba(255,170,85,0.25), rgba(255,122,0,0.06))'
-					border='1px solid'
-					borderColor='orange.200'
-					borderRadius='xl'
-					direction={{ base: "column", md: "row" }}
-					justify='space-between'
-					align={{ base: "start", md: "center" }}
-					gap={4}
-				>
-					<Box>
-						<Text fontFamily='heading' fontSize='lg' fontWeight='700' color='orange.100'>
-							Premium Report (BDT 499)
-						</Text>
-						<Text color='orange.50' fontSize='sm'>
-							Includes profile score, risk summary, and a clear yes/no hiring suggestion.
-						</Text>
-					</Box>
-					<Flex gap={3} direction={{ base: "column", sm: "row" }} w={{ base: "full", md: "auto" }}>
-						<Button as='a' href={WHATSAPP_LINK} target='_blank' rel='noopener noreferrer' bg='orange.300' color='surface.900' _hover={{ bg: "orange.200", textDecoration: "none" }}>
-							Order Report
-						</Button>
-						<Button as='a' href={`tel:${BKASH_NUMBER}`} bg='orange.100' color='surface.900' _hover={{ bg: "orange.200", textDecoration: "none" }}>
-							Pay via bKash
-						</Button>
-					</Flex>
-				</Flex>
 			</Box>
 
 			{loading && !userData && (
@@ -130,27 +101,6 @@ export default function Home() {
 			)}
 
 			{userData && <UserProfile userData={userData} />}
-
-			<Flex mt={10} mb={20} direction={{ base: "column", lg: "row" }} gap={5} align='stretch'>
-				<Box flex={1} p={5} borderRadius='xl' border='1px solid' borderColor='whiteAlpha.300' bg='whiteAlpha.100'>
-					<Text fontSize='xl' fontWeight='800' color='accent.200'>Why people buy</Text>
-					<Text mt={2} color='whiteAlpha.800'>
-						They need a quick and simple decision before hiring.
-					</Text>
-				</Box>
-				<Box flex={1} p={5} borderRadius='xl' border='1px solid' borderColor='whiteAlpha.300' bg='whiteAlpha.100'>
-					<Text fontSize='xl' fontWeight='800' color='accent.200'>What is special</Text>
-					<Text mt={2} color='whiteAlpha.800'>
-						Your site gives one simple score from many signals, so clients understand quickly.
-					</Text>
-				</Box>
-				<Box flex={1} p={5} borderRadius='xl' border='1px solid' borderColor='whiteAlpha.300' bg='whiteAlpha.100'>
-					<Text fontSize='xl' fontWeight='800' color='accent.200'>Simple payment flow</Text>
-					<Text mt={2} color='whiteAlpha.800'>
-						See score, message on WhatsApp, then pay with bKash.
-					</Text>
-				</Box>
-			</Flex>
 
 			<Box
 				position='fixed'
@@ -167,7 +117,7 @@ export default function Home() {
 				boxShadow='0 14px 34px rgba(0,0,0,0.35)'
 			>
 				<Text fontSize='xs' color='orange.100' letterSpacing={0.6} fontWeight='700'>
-					CONTACT
+					DONATE VIA BKASH
 				</Text>
 				<Text mt={1} fontSize='sm' color='whiteAlpha.900'>
 					bKash: {BKASH_NUMBER}
