@@ -101,6 +101,55 @@ export default function Home() {
 			)}
 
 			{userData && <UserProfile userData={userData} />}
+
+			<Box
+				position='fixed'
+				right={{ base: 3, md: 6 }}
+				bottom={{ base: 3, md: 6 }}
+				zIndex={20}
+				bg='linear-gradient(145deg, rgba(255,255,255,0.16), rgba(255,255,255,0.08))'
+				backdropFilter='blur(12px)'
+				border='1px solid'
+				borderColor='whiteAlpha.400'
+				borderRadius='xl'
+				p={3}
+				w={{ base: "220px", md: "250px" }}
+				boxShadow='0 14px 34px rgba(0,0,0,0.35)'
+			>
+				<Text fontSize='xs' color='orange.100' letterSpacing={0.6} fontWeight='700'>
+					SUPPORT / CONTACT
+				</Text>
+				<Text mt={1} fontSize='sm' color='whiteAlpha.900'>
+					bKash: 01915215080
+				</Text>
+				<Text fontSize='sm' color='whiteAlpha.900'>
+					WhatsApp: 01943739336
+				</Text>
+				<Flex mt={2} gap={2}>
+					<Button
+						as='a'
+						href='tel:01915215080'
+						size='xs'
+						bg='orange.300'
+						color='surface.900'
+						_hover={{ bg: "orange.200", textDecoration: "none" }}
+					>
+						bKash
+					</Button>
+					<Button
+						as='a'
+						href='https://wa.me/8801943739336'
+						target='_blank'
+						rel='noopener noreferrer'
+						size='xs'
+						bg='orange.100'
+						color='surface.900'
+						_hover={{ bg: "orange.200", textDecoration: "none" }}
+					>
+						WhatsApp
+					</Button>
+				</Flex>
+			</Box>
 		</Container>
 	);
 }
