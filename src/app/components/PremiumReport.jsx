@@ -59,6 +59,12 @@ const PremiumReport = ({ username }) => {
 		}
 	};
 
+	const getWhatsAppShareLink = () => {
+		if (!report) return "#";
+		const message = `Premium report for @${report.username}\nScore: ${report.score}/100\nDecision: ${report.decision}\nSummary: ${report.summary}`;
+		return `https://wa.me/8801943739336?text=${encodeURIComponent(message)}`;
+	};
+
 	return (
 		<Box mt={6} p={{ base: 4, md: 5 }} borderRadius='xl' border='1px solid' borderColor='whiteAlpha.300' bg='whiteAlpha.100'>
 			<Flex justify='space-between' align={{ base: "start", md: "center" }} direction={{ base: "column", md: "row" }} gap={3}>
@@ -118,6 +124,14 @@ const PremiumReport = ({ username }) => {
 							</UnorderedList>
 						</Box>
 					</Flex>
+					<Flex mt={4} gap={2} wrap='wrap'>
+						<Button as='a' href={getWhatsAppShareLink()} target='_blank' rel='noopener noreferrer' bg='orange.300' color='surface.900' _hover={{ bg: "orange.200", textDecoration: "none" }}>
+							Share on WhatsApp
+						</Button>
+						<Button as='a' href='tel:01915215080' bg='orange.100' color='surface.900' _hover={{ bg: "orange.200", textDecoration: "none" }}>
+							Donate if helpful
+						</Button>
+					</Flex>
 				</Box>
 			)}
 		</Box>
@@ -125,4 +139,3 @@ const PremiumReport = ({ username }) => {
 };
 
 export default PremiumReport;
-
