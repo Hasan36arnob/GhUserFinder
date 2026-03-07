@@ -8,7 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "cf:build": "npx @cloudflare/next-on-pages@1",
-    "cf:deploy": "wrangler pages deploy"
+    "cf:deploy": "wrangler pages deploy .vercel/output/static --project-name ghlens --branch main"
   },
   "dependencies": {
     "@chakra-ui/icons": "^2.0.19",
