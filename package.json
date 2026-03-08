@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "dev": "node init && next dev",
+    "build": "node init && next build",
+    "start": "node init && next start",
     "lint": "next lint",
     "cf:build": "npx @cloudflare/next-on-pages@1",
     "cf:deploy": "wrangler pages deploy .vercel/output/static --project-name ghlens --branch main"

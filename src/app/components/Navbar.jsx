@@ -19,7 +19,14 @@ const Navbar = () => {
 					boxShadow='0 14px 28px rgba(255, 122, 0, 0.35)'
 					p={2}
 				>
-					<Image src={"/logo.png"} fill alt='GitHub logo' style={{ filter: "invert(1) contrast(1.2)" }} />
+					<Image
+						src={"/logo.png"}
+						fill
+						unoptimized
+						sizes='(max-width: 48em) 54px, 62px'
+						alt='GitHub logo'
+						style={{ filter: "invert(1) contrast(1.2)" }}
+					/>
 				</Box>
 				<Box>
 					<Text fontFamily='heading' fontWeight='700' letterSpacing='-0.02em' color='orange.100'>
